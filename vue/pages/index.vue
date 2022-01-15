@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="custom">
-    <div>Hope this fucking test will works</div>
+    <div></div>
   </NuxtLayout>
 </template>
 
