@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
-const Id = require("../db/models/IdModel");
-const User = require("../db/models/userModel");
+const Id = require("../bdd/models/idModel");
+const User = require("../bdd/models/usersModel");
 
 router.get("/", async (req, res) => {
   const users = await User.find({}, { _id: 0 });
