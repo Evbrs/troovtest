@@ -6,11 +6,11 @@ const objectsSchema = new Schema({
     type: Number,
     required: true,
   },
-  ObjectDescription: {
+  objectDescription: {
     type: String,
     required: true,
   },
-  Place: {
+  place: {
     type: String,
     required: true,
     unique: true,
@@ -21,12 +21,12 @@ const objectsSchema = new Schema({
   },
 });
 
-userSchema.statics.findByObjectId = function (id) {
+objectsSchema.statics.findByObjectId = function (id) {
   return this.findOne({ id }, { _id: 0 });
 };
 
-userSchema.statics.findByObjectDescription = function (username) {
-  return this.findOne({ username }, { _id: 0 });
+objectsSchema.statics.findByObjectDescription = function (objectDescription) {
+  return this.findOne({ objectDescription }, { _id: 0 });
 };
 
-module.exports = userSchema;
+module.exports = objectsSchema;

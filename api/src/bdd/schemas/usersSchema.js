@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const usersSchema = new Schema({
   id: {
     type: Number,
     required: true,
@@ -26,12 +26,12 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.statics.findByUserId = function (id) {
+usersSchema.statics.findByUserId = function (id) {
   return this.findOne({ id }, { _id: 0 });
 };
 
-userSchema.statics.findByUsername = function (username) {
+usersSchema.statics.findByUsername = function (username) {
   return this.findOne({ username }, { _id: 0 });
 };
 
-module.exports = userSchema;
+module.exports = usersSchema;

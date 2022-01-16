@@ -43,9 +43,11 @@ router.post("/", async (req, res) => {
   });
 
   try {
-    await user.save();
+    console.log(user);
+    let test = await user.save();
+    console.log(test);
   } catch (err) {
-    res.status(422).send("Error");
+    res.status(422).send("error");
     return;
   }
 

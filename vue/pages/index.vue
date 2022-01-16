@@ -13,7 +13,7 @@
       </div>
     </div>
     <add-object />
-    <div class="bg-gray-100 h-28"></div>
+    <div class="bg-gray-100 h-72 md:h-96"></div>
   </NuxtLayout>
 </template>
 
