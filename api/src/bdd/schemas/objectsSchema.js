@@ -13,7 +13,6 @@ const objectsSchema = new Schema({
   place: {
     type: String,
     required: true,
-    unique: true,
   },
   objectAddAt: {
     type: Date,
@@ -22,11 +21,11 @@ const objectsSchema = new Schema({
 });
 
 objectsSchema.statics.findByObjectId = function (id) {
-  return this.findOne({ id }, { _id: 0 });
+  return this.findOne({ id });
 };
 
 objectsSchema.statics.findByObjectDescription = function (objectDescription) {
-  return this.findOne({ objectDescription }, { _id: 0 });
+  return this.findOne({ objectDescription });
 };
 
 module.exports = objectsSchema;

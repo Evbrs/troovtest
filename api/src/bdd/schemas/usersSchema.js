@@ -27,11 +27,11 @@ const usersSchema = new Schema({
 });
 
 usersSchema.statics.findByUserId = function (id) {
-  return this.findOne({ id }, { _id: 0 });
+  return this.findOne({ id });
 };
 
 usersSchema.statics.findByUsername = function (username) {
-  return this.findOne({ username }, { _id: 0 });
+  return this.findOne({ username });
 };
 
 module.exports = usersSchema;

@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
     return;
   }
 
-  Id.updateOne(lastId, { value: object.id });
+  await Id.updateOne({ name: "objects" }, { value: object.id });
 
   res.send(object);
 });
@@ -75,10 +75,12 @@ router.put("/:objectId(\\d+)", async (req, res) => {
 
   res.send(object);
 });
-router.put("/:objectDescription(\\d+)", async (req, res) => {
+router.put("/:objectDescription(\\w+)", async (req, res) => {
   const { objectDescription, place } = req.body;
 
-  const object = await Object.findByObjectname(req.params.objectDescription);
+  const object = await Object.findByObjectDescription(
+    req.params.objectDescription
+  );
 
   if (!object) {
     res.status(404).send({ error: "Not found" });

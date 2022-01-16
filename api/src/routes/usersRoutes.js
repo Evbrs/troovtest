@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const crypt = require("bcryptjs");
 
 const Id = require("../bdd/models/idModel");
 const User = require("../bdd/models/usersModel");
@@ -35,23 +36,25 @@ router.post("/", async (req, res) => {
 
   const lastId = (await Id.getLastId("users")).value;
 
-  const user = new User({
+  const salt = await crypt.genSalt(10);
+  const cryptedPass = await crypt.hash(req.body.password, salt);
+
+  const user = await new User({
     id: lastId + 1,
     username,
     email,
-    password,
+    password: cryptedPass,
   });
 
   try {
     console.log(user);
-    let test = await user.save();
-    console.log(test);
+    await user.save();
   } catch (err) {
     res.status(422).send("error");
     return;
   }
 
-  Id.updateOne(lastId, { value: user.id });
+  await Id.updateOne({ name: "users" }, { value: user.id });
 
   res.send(user);
 });
@@ -79,7 +82,7 @@ router.put("/:userId(\\d+)", async (req, res) => {
 
   res.send(user);
 });
-router.put("/:username(\\d+)", async (req, res) => {
+router.put("/:username(\\w+)", async (req, res) => {
   const { username, email, password } = req.body;
 
   const user = await User.findByUsername(req.params.username);
