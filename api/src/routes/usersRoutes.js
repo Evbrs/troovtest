@@ -22,10 +22,17 @@ router.get("/:userId(\\d+)", async (req, res) => {
 
 router.get("/:username(\\w+)", async (req, res) => {
   const user = await User.findByUsername(req.params.username);
-
+  const hash = req.params.password;
   if (!user) {
     res.status(404).send("Error");
     return;
+  } else {
+    crypt.compareSync(user.password, hash);
+
+    try {
+    } catch {
+      res.status(404).send("Mdp incorrect");
+    }
   }
 
   res.send(user);
