@@ -1,15 +1,15 @@
 const router = require("express").Router();
 
 const Id = require("../bdd/models/idModel");
-const Object = require("../bdd/models/objectsModel");
+const Item = require("../bdd/models/objectsModel");
 
 router.get("/", async (req, res) => {
-  const objects = await Object.find({}, { _id: 0 });
+  const objects = await Item.find({}, { _id: 0 });
   res.send(objects);
 });
 
 router.get("/:objectId(\\d+)", async (req, res) => {
-  const object = await Object.findByObjectId(req.params.ObjectId);
+  const object = await Item.findByItemId(req.params.ItemId);
 
   if (!object) {
     res.status(404).send("Error");
@@ -20,7 +20,7 @@ router.get("/:objectId(\\d+)", async (req, res) => {
 });
 
 router.get("/:objectDescription(\\w+)", async (req, res) => {
-  const object = await Object.findByObjectname(req.params.objectDescription);
+  const object = await Item.findByItemname(req.params.objectDescription);
 
   if (!object) {
     res.status(404).send("Error");
@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
 
   const lastId = (await Id.getLastId("objects")).value;
   console.log(req.body);
-  const object = new Object({
+  const object = new Item({
     id: lastId + 1,
     objectDescription,
     place,
@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
 router.put("/:objectId(\\d+)", async (req, res) => {
   const { objectDescription, place } = req.body;
 
-  const object = await Object.findByObjectId(req.params.ObjectId);
+  const object = await Item.findByItemId(req.params.ItemId);
 
   if (!object) {
     res.status(404).send({ error: "Not found" });
@@ -78,9 +78,7 @@ router.put("/:objectId(\\d+)", async (req, res) => {
 router.put("/:objectDescription(\\w+)", async (req, res) => {
   const { objectDescription, place } = req.body;
 
-  const object = await Object.findByObjectDescription(
-    req.params.objectDescription
-  );
+  const object = await Item.findByItemDescription(req.params.objectDescription);
 
   if (!object) {
     res.status(404).send({ error: "Not found" });
@@ -100,8 +98,8 @@ router.put("/:objectDescription(\\w+)", async (req, res) => {
   res.send(object);
 });
 
-router.delete("/:ObjectId(\\d+)", async (req, res) => {
-  const object = await Object.findByObjectId(req.params.ObjectId);
+router.delete("/:ItemId(\\d+)", async (req, res) => {
+  const object = await Item.findByItemId(req.params.ItemId);
 
   if (!object) {
     res.status(404).send("Error");
@@ -114,14 +112,14 @@ router.delete("/:ObjectId(\\d+)", async (req, res) => {
 });
 
 router.delete("/:objectDescription(\\d+)", async (req, res) => {
-  const object = await Object.findByObjectId(req.params.objectDescription);
+  const object = await Item.findByItemId(req.params.objectDescription);
 
   if (!object) {
     res.status(404).send("Error");
     return;
   }
 
-  await Object.deleteOne(object);
+  await Item.deleteOne(object);
 
   res.status(204).send();
 });

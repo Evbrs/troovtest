@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="custom">
     <div>
-      <h1>Event Listing</h1>
+      <h1 class="">Event Listing</h1>
       <ul
         v-for="event in events"
         :key="event.id"

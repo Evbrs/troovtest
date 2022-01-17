@@ -12,6 +12,7 @@
             type="text"
             placeholder="Type de l'objet"
             class="w-full h-5 px-3 py-5 mt-2 border rounded-md hover:outline-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+            v-model="Item.objectDescription"
           />
           <label class="block mt-3 font-semibold"
             >Lieu où vous l'avez trouvé</label
@@ -20,10 +21,12 @@
             type="text"
             placeholder="Lieu"
             class="w-full h-5 px-3 py-5 mt-2 border rounded-md hover:outline-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+            v-model="Item.place"
           />
           <div class="flex items-baseline justify-between">
             <button
               class="px-6 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              @click="postAPI()"
             >
               Valider
             </button>
@@ -35,7 +38,30 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  data() {
+    return {
+      Item: { objectDescription: "", place: "" },
+    };
+  },
+  methods: {
+    postAPI() {
+      var newItem = {
+        objectDescription: this.Item.objectDescription,
+        place: this.Item.place,
+      };
+      axios
+        .post("http://localhost:8080/objects/", newItem)
+        .then((reponse) => {
+          console.log(reponse);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 
 <style></style>

@@ -31,7 +31,7 @@
           <div class="flex items-baseline justify-between">
             <button
               class="px-6 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-              @click="postAPI()"
+              @click="postAPIobject()"
             >
               Valider
             </button>
@@ -51,7 +51,7 @@ export default {
     };
   },
   methods: {
-    postAPI() {
+    postAPIobject() {
       var newUser = {
         username: this.User.username,
         email: this.User.email,

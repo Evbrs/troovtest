@@ -20,11 +20,11 @@ const objectsSchema = new Schema({
   },
 });
 
-objectsSchema.statics.findByObjectId = function (id) {
+objectsSchema.statics.findByItemId = function (id) {
   return this.findOne({ id });
 };
 
-objectsSchema.statics.findByObjectDescription = function (objectDescription) {
+objectsSchema.statics.findByItemDescription = function (objectDescription) {
   return this.findOne({ objectDescription });
 };
 
