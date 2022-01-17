@@ -12,22 +12,26 @@
             type="text"
             placeholder="Username"
             class="w-full h-5 px-3 py-5 mt-2 border rounded-md hover:outline-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+            v-model="User.username"
           />
           <label class="block mt-3 font-semibold">Email</label>
           <input
             type="email"
             placeholder="Email"
             class="w-full h-5 px-3 py-5 mt-2 border rounded-md hover:outline-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+            v-model="User.email"
           />
           <label class="block mt-3 font-semibold">Mot de passe</label>
           <input
             type="password"
             placeholder="Password"
             class="w-full h-5 px-3 py-5 mt-2 border rounded-md hover:outline-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+            v-model="User.password"
           />
           <div class="flex items-baseline justify-between">
             <button
               class="px-6 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              @click="postAPI()"
             >
               Valider
             </button>
@@ -39,7 +43,31 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  data() {
+    return {
+      User: { username: "", email: "", password: "" },
+    };
+  },
+  methods: {
+    postAPI() {
+      var newUser = {
+        username: this.User.username,
+        email: this.User.email,
+        password: this.User.password,
+      };
+      axios
+        .post("http://localhost:8080/users/", newUser)
+        .then((reponse) => {
+          console.log(reponse);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 
 <style></style>
